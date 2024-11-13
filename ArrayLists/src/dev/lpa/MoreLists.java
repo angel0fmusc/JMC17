@@ -62,6 +62,8 @@ public class MoreLists {
 
         groceries.addAll(List.of("apples","milk", "mustard","cheese"));
         groceries.addAll(Arrays.asList("eggs","pickles","mustard","ham"));
+        System.out.println(groceries.size());
+        System.out.println("Item at index 3 = " + groceries.get(3));
         System.out.println(groceries);
 
         groceries.sort(Comparator.naturalOrder());
