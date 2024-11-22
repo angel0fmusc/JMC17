@@ -23,5 +23,20 @@ public class Main {
         System.out.println("List length so far: " + myLinkedList.getLength());
         myLinkedList.insert(1, 20);
         myLinkedList.printList();
+
+        // Remove by index
+        myLinkedList.remove(-1);
+        myLinkedList.printList();
+        Node removedNode = myLinkedList.remove(100);
+        System.out.println("Removed node with value: " + removedNode.getValue());
+        myLinkedList.printList();
+        removedNode = myLinkedList.remove(3);
+        System.out.println("Removed node with value: " + removedNode.getValue());
+        myLinkedList.printList();
+        removedNode = myLinkedList.remove(0);
+        System.out.println("Removed node with value: " + removedNode.getValue());
+        myLinkedList.printList();
+
+
     }
 }

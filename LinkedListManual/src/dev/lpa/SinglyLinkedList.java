@@ -50,6 +50,16 @@ public class SinglyLinkedList {
         length++;
     }
 
+    private Node traverseList(int index){
+        Node iterator = head;
+        int iteratorIndex = 0;
+        while(iteratorIndex < index){
+            iterator = iterator.getNext();
+            iteratorIndex++;
+        }
+        return iterator;
+    }
+
     public void insert(int index, int value){
         if(index > length-1 || index < 0){
             System.out.println("Invalid index: " + index);
@@ -59,14 +69,36 @@ public class SinglyLinkedList {
             append(value);
         } else{
             // need to traverse the list
-            Node iterator = head;
-            int iteratorIndex = 0;
-            while(iteratorIndex < index-1){
-                iterator = iterator.getNext();
-                iteratorIndex++;
-            }
-            iterator.setNext(new Node(value, iterator.getNext()));
+            Node leader = traverseList(index-1);
+            leader.setNext(new Node(value, leader.getNext()));
             length++;
         }
+    }
+
+    public Node remove(int index){
+        Node removedNode;
+
+        if(index < 0){ // remove first node?
+            System.out.println("Invalid index: " + index);
+            return null;
+        } else if(index == 0){
+            removedNode = head;
+            head = removedNode.getNext();
+            removedNode.setNext(null);
+        }
+        else if(index >= length-1){
+            // remove the last node
+            Node leader = traverseList(length-2);
+            removedNode = leader.getNext();
+            leader.setNext(null);
+            tail = leader;
+        }
+        else{
+            Node leader = traverseList(index-1);
+            removedNode = leader.getNext();
+            leader.setNext(removedNode.getNext());
+            removedNode.setNext(null);
+        }
+        return removedNode;
     }
 }
