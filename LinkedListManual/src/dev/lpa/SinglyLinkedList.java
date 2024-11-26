@@ -80,11 +80,12 @@ public class SinglyLinkedList {
 
         if(index < 0){ // remove first node?
             System.out.println("Invalid index: " + index);
-            return null;
+            removedNode = null;
         } else if(index == 0){
             removedNode = head;
             head = removedNode.getNext();
             removedNode.setNext(null);
+            length--;
         }
         else if(index >= length-1){
             // remove the last node
@@ -92,12 +93,14 @@ public class SinglyLinkedList {
             removedNode = leader.getNext();
             leader.setNext(null);
             tail = leader;
+            length--;
         }
         else{
             Node leader = traverseList(index-1);
             removedNode = leader.getNext();
             leader.setNext(removedNode.getNext());
             removedNode.setNext(null);
+            length--;
         }
         return removedNode;
     }
