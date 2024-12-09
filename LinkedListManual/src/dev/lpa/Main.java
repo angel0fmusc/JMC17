@@ -68,5 +68,13 @@ public class Main {
         myDoublyLinkedList.printForwardList();
         myDoublyLinkedList.printBackwardList();
 
+        SinglyLinkedList mySingleList = new SinglyLinkedList(10);
+        mySingleList.append(1);
+        mySingleList.append(16);
+        mySingleList.append(88);
+        mySingleList.printList();
+        SinglyLinkedList myReversedList = mySingleList.reverse();
+        myReversedList.printList();
+
     }
 }

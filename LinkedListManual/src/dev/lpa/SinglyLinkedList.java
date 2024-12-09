@@ -50,6 +50,24 @@ public class SinglyLinkedList {
         length++;
     }
 
+    public SinglyLinkedList reverse(){
+        if(this.length == 1){
+            return this;
+        }
+        Node first = this.head;
+        this.tail = this.head;
+        Node second = first.getNext();
+        while(second != null){
+            Node temp = second.getNext();
+            second.setNext(first);
+            first = second;
+            second = temp;
+        }
+        this.head.setNext(null);
+        this.head = first;
+        return this;
+    }
+
     private Node traverseList(int index){
         Node iterator = head;
         int iteratorIndex = 0;
