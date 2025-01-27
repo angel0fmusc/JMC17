@@ -66,4 +66,9 @@ public class Main {
 
         return sortedNumbers;
     }
+
+    public static int[] insertionSort(int[] nums){
+        int [] sortedNums = Arrays.copyOf(nums, nums.length);
+        return sortedNums;
+    }
 }
