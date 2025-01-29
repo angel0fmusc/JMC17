@@ -76,6 +76,7 @@ public class Main {
      * adds the current value to the beginning if the current value is less than the smallest sorted
      * number. Otherwise, traverse either up or down the sorted section based on the value
      * at the median index. ToDo: move the swapping mechanism to a separate method
+     * Big-O complexity is O(nlogn)
      * @param nums an unsorted Integer[] array
      * @return the sorted LinkedList as an Array
      */
