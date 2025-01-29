@@ -1,6 +1,7 @@
 package dev.interview.algorithms;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 
 public class Main {
 
@@ -9,16 +10,19 @@ public class Main {
         Arrays.sort(letters);
 //        System.out.println(Arrays.toString(letters));
 
-        int[] unsortedNumbers = {99, 44, 6, 2, 1, 5, 63, 87, 283, 4, 0};
+        Integer[] unsortedNumbers = {99, 44, 6, 2, 1, 5, 63, 87, 283, 4, 0};
         System.out.print("Original: ");
         System.out.println(Arrays.toString(unsortedNumbers));
 
-        System.out.println("Bubble Sort: " + Arrays.toString(myBubbleSort(unsortedNumbers)));
-        System.out.println("Selection Sort: " + Arrays.toString(selectionSort(unsortedNumbers)));
+//        System.out.println("Bubble Sort: " + Arrays.toString(myBubbleSort(unsortedNumbers)));
+//        System.out.println("Selection Sort: " + Arrays.toString(selectionSort(unsortedNumbers)));
+        System.out.println("\nInsertion Sort with LinkedList:");
+        insertionSort(unsortedNumbers);
+
     }
 
-    public static int[] myBubbleSort(int[] unsortedArray){
-        int[] sortedNumbers = Arrays.copyOf(unsortedArray, unsortedArray.length);
+    public static Integer[] myBubbleSort(Integer[] unsortedArray){
+        Integer[] sortedNumbers = Arrays.copyOf(unsortedArray, unsortedArray.length);
         int maxIndex = sortedNumbers.length-2;
         for(int i = maxIndex; i >= 0; i--){
             for(int j = 0; j <= i; j++){
@@ -33,7 +37,7 @@ public class Main {
         return sortedNumbers;
     }
 
-    public static void videoBubbleSort(int[] arr){
+    public static void videoBubbleSort(Integer[] arr){
         int length = arr.length;
         for(int i = 0; i < length-1; i++){
             for(int j = 0; j < length-1; j++){
@@ -46,8 +50,8 @@ public class Main {
         }
     }
 
-    public static int[] selectionSort(int[] unsortedArray){
-        int[] sortedNumbers = Arrays.copyOf(unsortedArray, unsortedArray.length);
+    public static Integer[] selectionSort(Integer[] unsortedArray){
+        Integer[] sortedNumbers = Arrays.copyOf(unsortedArray, unsortedArray.length);
         int smallestNo;
         int smallestNoIndex;
 
@@ -67,8 +71,69 @@ public class Main {
         return sortedNumbers;
     }
 
-    public static int[] insertionSort(int[] nums){
-        int [] sortedNums = Arrays.copyOf(nums, nums.length);
-        return sortedNums;
+    public static Integer[] insertionSort(Integer[] nums){
+        /*
+         * Convert the array to a LinkedList using Arrays.asList() and the LinkedList constructor.
+         * Arrays.asList() creates a fixed-size list backed by the specified array,
+         * and the LinkedList constructor then takes this list to initialize a new LinkedL ist.
+         */
+        var sortedNums = new LinkedList<Integer>(Arrays.asList(nums));
+        System.out.println("Size of the array = " + sortedNums.size());
+        for(int i = 1; i < sortedNums.size(); i++){
+            // If the current element is less than the first, move to the beginning
+            if(sortedNums.get(i) <= sortedNums.getFirst()){
+                sortedNums.addFirst(sortedNums.get(i));
+                /* Everything shifts; need to remove
+                * the item at i+1 because we now have
+                * duplicates.
+                */
+                sortedNums.remove(i+1);
+            }
+            /* If the current element is greater than the first and less than
+            * the mostly recently sorted element, need to find where it goes.
+            * Traverse down the sorted elements until we find the right spot?
+            */
+            else if(sortedNums.get(i) >= sortedNums.getFirst() &&
+            sortedNums.get(i) <= sortedNums.get(i-1)){
+                /* Get the median index.
+                *  If sortedNums.get(i) < sortedNums.get(median)
+                *  then traverse down the LinkedList from median to 1.
+                *  Otherwise, traverse up the LinkedList from median to i-1.
+                */
+                int medianIndex = (1 + (i-1))/2;
+                System.out.println("medianIndex = " + medianIndex);
+                if(sortedNums.get(i) < sortedNums.get(medianIndex)){
+                    System.out.println("Traversing down from middle index to 1.");
+                    for(int j = medianIndex; j >= 1; j--){
+                        System.out.printf("sortedNums[%d]=%5d%n", j, sortedNums.get(j)); // Printing out for now
+                        /* Check if current value is (sortedNums.get(i)) is greater than
+                        * sortedNums.get(j), put the current value in sortedNums.get(j+1)
+                        * */
+                        if(sortedNums.get(i) >= sortedNums.get(j)){
+                            sortedNums.add(j+1,sortedNums.get(i));
+                            sortedNums.remove(i+1);
+                            break;
+                        }
+                    }
+                } else{
+                    System.out.println("Traversing up from middle index to i-1.");
+                    // Traverse up from the medianIndex to i-1
+                    for(int j = medianIndex; j <= i-1; j++){
+                        /* Check if the current value is less than sortedNums.get(j).
+                        * If so, put the current value before sortedNums.get(j);
+                        * sortedNums.get(j-1)*/
+                        System.out.printf("sortedNums[%d]=%5d%n", j, sortedNums.get(j));
+                        if(sortedNums.get(i) <= sortedNums.get(j)){
+                            sortedNums.add(j,sortedNums.get(i));
+                            sortedNums.remove(i+1);
+                            break;
+                        }
+                    }
+                }
+            }
+            System.out.printf("i = %d\t",i);
+            System.out.println(sortedNums);
+        }
+        return sortedNums.toArray(new Integer[0]);
     }
 }
