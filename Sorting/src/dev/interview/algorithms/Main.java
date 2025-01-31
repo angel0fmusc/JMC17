@@ -49,20 +49,45 @@ public class Main {
         }
     }
 
+    /**
+     * Selection Sort:
+     * Sort an array by repeatedly selecting the smallest element
+     * from the unsorted portion and swapping it with the first unsorted
+     * element. Continue until the entire array is sorted.
+     *
+     * Big-O time complexity O(n^2)
+     * Big-O space complexity O(1)
+     * @param unsortedArray - an unsorted array of Integers
+     * @return a sorted array of Integers
+     */
     public static Integer[] selectionSort(Integer[] unsortedArray){
         Integer[] sortedNumbers = Arrays.copyOf(unsortedArray, unsortedArray.length);
         int smallestNo;
         int smallestNoIndex;
 
-        for(int i = 0; i < sortedNumbers.length; i++){
+        for(int i = 0; i < sortedNumbers.length; i++){ // O(n)
+            // Capture the smallest number, which is assumed to be at the current index
+            // and that index
             smallestNo = sortedNumbers[i];
             smallestNoIndex = i;
+            /*
+            * Loop through the remaining values of the array. If we come
+            * across a value smaller than the currently recorded smallest number,
+            * then record it as the new smallest number and that index.
+            * Continue checking the remaining values in case we find another
+            * value that is smaller.
+            * */
             for(int j = i+1; j < sortedNumbers.length; j++){
                 if(sortedNumbers[j] < smallestNo){
                     smallestNo = sortedNumbers[j];
                     smallestNoIndex = j;
                 }
             }
+            /*
+            * Swap the smallest number found in the unsorted section of the array with the value
+            * at index i. This effectively finds the smallest number in the unsorted section
+            * and moves it to the correct spot in the sorted section.
+            * */
             sortedNumbers[smallestNoIndex] = sortedNumbers[i];
             sortedNumbers[i] = smallestNo;
         }
@@ -71,12 +96,14 @@ public class Main {
     }
 
     /**
-     * Insertion sort using LinkedList. Converts and Integer[] array into
-     * a LinkedList of the same type. Traverses the LinkedList and
+     * Insertion sort using LinkedList. Also implements Merge sort kind of.
+     * Converts and Integer[] array into a LinkedList of the same type.
+     * Traverses the LinkedList and
      * adds the current value to the beginning if the current value is less than the smallest sorted
      * number. Otherwise, traverse either up or down the sorted section based on the value
-     * at the median index. ToDo: move the swapping mechanism to a separate method
-     * Big-O complexity is O(nlogn)
+     * at the median index.
+     * ToDo: move the swapping mechanism to a separate method
+     * Big-O time complexity is O(nlogn)
      * @param nums an unsorted Integer[] array
      * @return the sorted LinkedList as an Array
      */
@@ -101,7 +128,7 @@ public class Main {
             * the mostly recently sorted element, need to find where it goes.
             * Traverse down the sorted elements until we find the right spot?
             */
-            else if(sortedNums.get(i) >= sortedNums.getFirst() &&
+            else if(sortedNums.get(i) > sortedNums.getFirst() &&
             sortedNums.get(i) <= sortedNums.get(i-1)){
                 /* Get the median index.
                 *  If sortedNums.get(i) < sortedNums.get(median)
