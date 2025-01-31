@@ -53,5 +53,62 @@ public class Main {
             System.out.println(e);
         }
 
+        System.out.println("With Pig Latin Names");
+        addPigLatinName(storeEmployees);
+
+    }
+
+    /**
+     * Enclosing code block can access local inner class's private fields even after the class declaration's closing
+     * bracket
+     * @param list
+     */
+    public static void addPigLatinName(List<? extends StoreEmployee> list){
+
+        String lastName = "Piggy";
+
+        // No modifiers. Will cause a compiler error if any are added
+        // Can also extend other classes
+        class DecoratedEmployee extends StoreEmployee
+                implements Comparable<DecoratedEmployee>{
+
+            private String pigLatinName;
+            private Employee originalInstance;
+
+            /*
+            * When generating constructor, need to select the no-args constructor of StoreEmployee
+            * in order to see the fields for this local inner class
+            * */
+            public DecoratedEmployee(String pigLatinName, Employee originalInstance) {
+                this.pigLatinName = pigLatinName + " " + lastName;
+                this.originalInstance = originalInstance;
+            }
+
+            @Override
+            public String toString() {
+                return originalInstance.toString() + " " + pigLatinName;
+            }
+
+            @Override
+            public int compareTo(DecoratedEmployee o) {
+                return pigLatinName.compareTo(o.pigLatinName);
+            }
+        }
+
+        List<DecoratedEmployee> newList = new ArrayList<>(list.size());
+
+        for(var employee : list){
+            String name = employee.getName();
+            String pigLatin = name.substring(1) + name.charAt(0) + "ay";
+            newList.add(new DecoratedEmployee(pigLatin, employee));
+        }
+        /*
+        * Passing null to sort method on a list will use the Comparable's
+        * compareTo method*/
+        newList.sort(null);
+        for(var dEmployee : newList){
+            System.out.println(dEmployee.originalInstance.getName() + " " +
+                    dEmployee.pigLatinName);
+        }
     }
 }
