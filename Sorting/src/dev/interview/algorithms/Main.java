@@ -14,9 +14,11 @@ public class Main {
         System.out.print("Original: ");
         System.out.println(Arrays.toString(unsortedNumbers));
 
-        System.out.println("Bubble Sort: " + Arrays.toString(myBubbleSort(unsortedNumbers)));
-        System.out.println("Selection Sort: " + Arrays.toString(selectionSort(unsortedNumbers)));
-        System.out.println("Insertion Sort with LinkedList: " + Arrays.toString(insertionSort(unsortedNumbers)));
+//        System.out.println("Bubble Sort: " + Arrays.toString(myBubbleSort(unsortedNumbers)));
+//        System.out.println("Selection Sort: " + Arrays.toString(selectionSort(unsortedNumbers)));
+//        System.out.println("Insertion Sort with LinkedList: " + Arrays.toString(insertionSort(unsortedNumbers)));
+
+        mergeSort(unsortedNumbers);
 
     }
 
@@ -163,5 +165,42 @@ public class Main {
             }
         }
         return sortedNums.toArray(new Integer[0]);
+    }
+
+    /**
+     * Divide and conquer with recursion.
+     * @param unsortedNums - Integer[]
+     * @return - Integer[]
+     */
+    public static Integer[] mergeSort(Integer[] unsortedNums){
+        // Exit case: if array only has 1 item in it, return
+        // that array as it is already sorted.
+        if(unsortedNums.length == 1){
+            return unsortedNums;
+        }
+        /*
+        * Need to find the median index so the array
+        * can be divided into a left and right portion*/
+        double lastIndex = unsortedNums.length-1;
+        double medianIndex = lastIndex/2;
+
+        return merge(
+                mergeSort(Arrays.copyOfRange(unsortedNums, 0, (int)medianIndex)),
+                mergeSort(Arrays.copyOfRange(unsortedNums,(int)medianIndex+1, (int)lastIndex))
+        );
+    }
+
+    /**
+     * Need to loop through the arrays and compare the numbers in them
+     * Double pointers?
+     * @param left - Integer[]
+     * @param right - Integer[]
+     * @return Integer[]
+     */
+    static Integer[] merge(Integer[] left, Integer[] right){
+        Integer[] sortedNums = new Integer[(left.length + right.length)];
+        System.out.println(left);
+        System.out.println(right);
+        return sortedNums;
     }
 }
