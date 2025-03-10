@@ -1,7 +1,9 @@
 package dev.lpa;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
 
 public class Main {
@@ -32,11 +34,52 @@ public class Main {
                 (a,b) -> a.toUpperCase() + " " + b.toUpperCase(),
                 "Ralph", "Kramden"
         );
+
+        var coords = Arrays.asList(
+                new double[]{47.2160, -95.2348},
+                new double[]{29.1566, -89.2495},
+                new double[]{35.1556, -90.0659}
+        );
+
+        coords.forEach(s -> System.out.println(Arrays.toString(s)));
+
+        /*
+        * Lambda expressions can be assigned to a local variable.
+        * This does not call the expression
+        * */
+        BiConsumer<Double, Double> p1 = (lat, lng) ->
+                System.out.printf("[lat:%.3f lon:%.3f]%n", lat, lng);
+
+        var firstPoint = coords.get(0); // First coordinate pair
+        processPoint(firstPoint[0], firstPoint[1], p1);
+
+        System.out.println("--------");
+        coords.forEach(s -> processPoint(s[0], s[1], p1));
+
+        list.removeIf(s -> s.equalsIgnoreCase("bravo"));
+        list.forEach(s -> System.out.println(s));
+
+        list.addAll(List.of("echo", "easy", "earnest"));
+        list.forEach(s -> System.out.println(s));
+        System.out.println("--------");
+        list.removeIf(s -> s.startsWith("ea"));
+        list.forEach(s -> System.out.println(s));
     }
 
     public static <T> T calculator(BinaryOperator<T> function, T value1, T value2){
         T result = function.apply(value1, value2);
         System.out.println("Result of operation: " + result);
         return result;
+    }
+
+    /**
+     * BiConsumer takes 2 arguments of the same type in this method
+     * @param t1
+     * @param t2
+     * @param consumer
+     * @param <T>
+     */
+    public static <T> void processPoint(T t1, T t2, BiConsumer<T,T> consumer){
+        consumer.accept(t1, t2);
     }
 }
