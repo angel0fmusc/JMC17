@@ -1,16 +1,13 @@
 package dev.lpa;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        List<Card> deck = Card.getStandardDeck();
-        Card.printDeck(deck);
+//        List<Card> deck = Card.getStandardDeck();
+//        Card.printDeck(deck);
 //        Card.printDeck(deck, "Less Cards per row", 10);
 
         Card[] cardArray = new Card[13];
@@ -66,5 +63,78 @@ public class Main {
 
         cards = List.copyOf(kingsOfClubs);
         Card.printDeck(cards, "List Copy of Kings", 1);
+
+        List<Card> deck = Card.getStandardDeck();
+        Card.printDeck(deck);
+
+        Collections.shuffle(deck);
+        Card.printDeck(deck, "Shuffled Deck", 4);
+
+        Collections.reverse(deck);
+        Card.printDeck(deck, "Reversed deck of cards", 4);
+
+        var sortingAlgorithm = Comparator.comparing(Card::rank).thenComparing(Card::suit);
+        Collections.sort(deck, sortingAlgorithm);
+        Card.printDeck(deck, "Standard Deck sorted by rank, suit", 13);
+
+        Collections.reverse(deck);
+        Card.printDeck(deck, "Sorted by rank, suit reversed:",13);
+
+        List<Card> kings = new ArrayList<>(deck.subList(4,8));
+        Card.printDeck(kings,"Kings in deck", 1);
+
+        List<Card> tens = new ArrayList<>(deck.subList(16,20));
+        Card.printDeck(tens,"Tens in deck", 1);
+
+        int subListIndex = Collections.indexOfSubList(deck, tens); //will return an integer if tens is found in the deck
+        System.out.println("Sublist index for tens = " + subListIndex);
+        System.out.println("Contains = " + deck.containsAll(tens));
+
+        boolean disjoint = Collections.disjoint(deck, tens);
+        System.out.println("disjoint = " + disjoint);
+
+        boolean disjoint2 = Collections.disjoint(kings, tens);
+        System.out.println("disjoint = " + disjoint2);
+
+        Card tenOfHearts = Card.getNumericCard(Card.Suit.HEART, 10);
+        Collections.sort(deck,sortingAlgorithm);
+        int foundIndex = Collections.binarySearch(deck, tenOfHearts, sortingAlgorithm);
+        System.out.println("Result of foundIndex = " + foundIndex);
+        System.out.println(deck.get(foundIndex));
+
+        Card tenOfClubs = Card.getNumericCard(Card.Suit.CLUB, 10);
+        Collections.replaceAll(deck, tenOfClubs, tenOfHearts);
+        Card.printDeck(deck.subList(32,36), "Tens row", 1);
+
+        Collections.replaceAll(deck, tenOfHearts, tenOfClubs);
+        Card.printDeck(deck.subList(32,36), "Tens row", 1);
+
+        System.out.println("Ten of Clubs Cards = " +
+                Collections.frequency(deck, tenOfClubs));
+
+        System.out.println("Best Card = " + Collections.max(deck, sortingAlgorithm));
+        System.out.println("Worst Card = " + Collections.min(deck, sortingAlgorithm));
+
+        var sortBySuit = Comparator.comparing(Card::suit).thenComparing(Card::rank);
+        deck.sort(sortBySuit);
+        Card.printDeck(deck, "Sorted by Suit, Rank", 4);
+
+        List<Card> copied = new ArrayList<>(deck.subList(0,13));
+        Collections.rotate(copied, 2); // Positive number passed moved elements from the end of the list
+        // to the front of the list
+        System.out.println("Unrotated: " + deck.subList(0,13));
+        System.out.println("Rotated " + 2 + ": " + copied);
+
+        copied = new ArrayList<>(deck.subList(0,13));
+        Collections.rotate(copied, -2); // Positive number passed moved elements from the end of the list
+        // to the front of the list
+        System.out.println("Unrotated: " + deck.subList(0,13));
+        System.out.println("Rotated " + -2 + ": " + copied);
+
+        copied = new ArrayList<>(deck.subList(0,13));
+        for(int i = 0; i < copied.size() / 2; i++){
+            Collections.swap(copied,i, copied.size()-1-i);
+        }
+        System.out.println("Manual reverse: " + copied);
     }
 }
