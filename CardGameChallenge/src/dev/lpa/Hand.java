@@ -9,6 +9,7 @@ public class Hand {
     private int handValue = 0;
     private boolean dealer;
     private boolean stand;
+    private boolean busted;
 
     public Hand(List<Card> deck, boolean isDealer) {
         if(!deck.isEmpty()){
@@ -20,6 +21,7 @@ public class Hand {
         }
         dealer = isDealer;
         stand = false;
+        busted = false;
     }
 
     public List<Card> getHand() {
@@ -28,6 +30,14 @@ public class Hand {
 
     public int getHandValue() {
         return handValue;
+    }
+
+    public boolean isBusted() {
+        return busted;
+    }
+
+    public void setBusted(boolean busted) {
+        this.busted = busted;
     }
 
     public boolean isStand() {
