@@ -26,7 +26,10 @@ public class Main {
         while(true){
 
             if(naturalsCheck(houseHand, true) || naturalsCheck(playerHand,false)){
-                System.out.println("Game over!");
+                houseHand.setDealer(false);
+                houseHand.printHand("Dealer");
+                playerHand.printHand("Player");
+                System.out.println("\nGame over!");
                 break;
             }
 
@@ -92,7 +95,7 @@ public class Main {
                 System.out.println("House wins!");
             } else if(playerHand.getHandValue() > houseHand.getHandValue() && playerHand.getHandValue() <= 21){
                 System.out.println("Player wins! Collect your bets!");
-            } else{
+            } else{ // have not accounted for if individuals bust, but the opposing hand is less than 21
                 // Tie?
                 System.out.println("\nSeems there might be a tie");
                 houseHand.printHand("Dealer");
