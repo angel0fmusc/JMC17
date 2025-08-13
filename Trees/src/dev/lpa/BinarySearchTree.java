@@ -125,7 +125,7 @@ public class BinarySearchTree {
             replacementNode = nodeToRemove.getRight();
             if(replacementNode.getLeft() == null) { //We don't have a left node
                 replacementNode.setLeft(nodeToRemove.getLeft());
-            } else { //We have a have a left node, lets find the leftmost
+            } else { //We have a left node, lets find the leftmost
                 Node replacementParentNode = nodeToRemove;
                 while (replacementNode.getLeft() != null) {
                     replacementParentNode = replacementNode;
