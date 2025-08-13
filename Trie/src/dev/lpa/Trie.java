@@ -34,7 +34,39 @@ public class Trie {
         System.out.println("Successfully inserted " + word + " in Trie");
     }
 
-    public void search(){}
+    public boolean search(String word){
+        // Need to traverse the Trie to see if the word is in it
+        TrieNode current = root;
+        // Loop through each character in the word
+        for(char c : word.toCharArray()){
+            // Check if current node's children map contains the
+            // current character
+            current = current.children.get(c);
+            if(current == null){
+                System.out.println(word + " was not found in the Trie");
+                return false;
+            }
+        }
+        // By the end of the loop we have reached the endOfString and we found the word
+        System.out.println(word + " was found in the Trie!");
+        return true;
+    }
 
-    public void startsWith(String word){}
+    public boolean startsWith(String prefix){
+        // Need to find the prefixes of a word
+        TrieNode current = root;
+        // Loop through each character in the prefix
+        for(char c : prefix.toCharArray()){
+            // Similar to search method, check if the current node's children map
+            // contains the current character
+            current = current.children.get(c);
+            if(current == null) {
+                System.out.println("Prefix, " + prefix + ", was not found in the Trie");
+                return false;
+            }
+        }
+        // by the end of the loop we do not care about end of string
+        System.out.println("Prefix, " + prefix + ", was found in the Trie");
+        return true;
+    }
 }
